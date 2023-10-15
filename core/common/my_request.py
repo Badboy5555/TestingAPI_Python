@@ -1,7 +1,7 @@
 import requests
 import allure
 from constants import Bases
-from core.common.environments import ENV
+from core.common.environments import Environ
 from core.common.logger import Logger
 
 
@@ -27,7 +27,7 @@ class MyRequest:
     @staticmethod
     def _send_request(method: str, url: str, headers: dict, data: dict, cookies: dict = None) -> requests.Response:
 
-        url = Bases.BASE_URL + url.replace('api_version', ENV.api_version)
+        url = Bases.BASE_URL + url.replace('api_version', Environ.get_env_api_version())
 
         if headers is None:
             headers = {}

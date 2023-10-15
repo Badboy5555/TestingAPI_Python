@@ -10,14 +10,15 @@ class TestAccountGetUser:
 
     def test_user_exist(self, generate_token_fix):
         # Generate Bearer-token for created user
-        self.headers, self.user_id, self.token = generate_token_fix
+        self.headers, self.user_data, self.user_id, self.token = generate_token_fix
 
         # Get user
         self.headers.update({'Authorization': f'Bearer {self.token}'})
 
-        response = GetUser(self.user_id, self.headers).get_user()
+        response = GetUser(self.headers, self.user_id).get_user()
 
         Assertions.assert_response_status_code(response, 200)
+        print(response.response_json)
         assert ValidResponse.model_validate(response.response_json)
         Assertions.assert_response_valid_schema(response, get_user_user_exists_schema)
 
