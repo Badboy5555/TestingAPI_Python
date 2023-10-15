@@ -11,11 +11,12 @@ class Account_urls:
 
 
 class ResponseErros:
-    USER_EXISTS = {"code": "1204", "message": "User exists!"}   # status code 406
-    USER_NOT_FOUND = {"code": "1207", "message": "User not found!"}  # status code 401
+    USER_EXISTS = {"code": "1204", "message": "CreateUser exists!"}   # status code 406
+    USER_NOT_FOUND = {"code": "1207", "message": "CreateUser not found!"}  # status code 401
     INVALID_PASSWORD = {"code": "1300", "message":
         "Passwords must have at least one non alphanumeric character, one digit ('0'-'9'),"
         " one uppercase ('A'-'Z'), one lowercase ('a'-'z'), "
         "one special character and Password must be eight characters or longer."}   # status code 400
     EMPTY_USER_NAME_OR_PASSWORD = {"code": "1200", "message": "UserName and Password required."}   # status code 400
-    UNAUTHORIZED = {"code": "1200", "message": "User not authorized!"}   # status code 401
+    UNAUTHORIZED = {"code": "1200", "message": "CreateUser not authorized!"}   # status code 401
+    USER_ID_NOT_CORRECT = {"code": "1207", "message": "User Id not correct!"}

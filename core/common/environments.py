@@ -1,5 +1,5 @@
 import os
-from core.logger import Logger
+from core.common.logger import Logger
 
 
 class Environ:
