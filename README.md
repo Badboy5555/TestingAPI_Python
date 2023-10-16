@@ -14,7 +14,7 @@ A tech stack: Python + requests + Pydantic + Pytest + Allure
    using CLI, navigate to project directory and run command `pip install -r requirements.txt`
 
 # Tests runnig
-For run all test, using CLI navigate to project directory and run command: `python -m pytest tests --alluredir=test_results`
+For run all test, using CLI navigate to project directory and run command: `python -m pytest tests --alluredir=allure-results`
 
 # Report 
-To generate testrun report, using CLI, navigate to project directory and run command: `allure serve test_result`
+To generate testrun report, using CLI, navigate to project directory and run command: `allure serve allure-results`
