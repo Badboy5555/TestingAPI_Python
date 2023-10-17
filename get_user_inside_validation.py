@@ -16,14 +16,14 @@ class GetUser(Base):
     def get_user(self) -> ResponseModel:
         response = MyRequest.get(self.url, headers=self.headers)
         
-        self.response_json = self.get_json(response)
+        response_json = self.get_json(response)
         try:
-            if not ValidResponse.model_validate(self.response_json):
-                ErrorResponse.model_validate(self.response_json)
+            if not ValidResponse.model_validate(response_json):
+                ErrorResponse.model_validate(response_json)
         except ValidationError:
-            Logger.get_instance().logger.critical(f'Response schema is not valid {self.response_json}',
+            Logger.get_instance().logger.critical(f'Response schema is not valid {response_json}',
                                                   exc_info=True)
             raise Exception('Response schema is not valid')
                 
-        return ResponseModel(status_code=self.get_status_code(response), response=self.response_json)
+        return ResponseModel(status_code=self.get_status_code(response), response=response_json)
 
