@@ -1,11 +1,12 @@
-import pytest
 import os
 
-from models.account.create_user import GenerateUser
+import pytest
+
 from core.api.account.create_user import CreateUser
 from core.api.account.generate_token import GenerateToken
 from core.common.assertions import Assertions
 from core.common.logger import Logger
+from models.account.create_user import GenerateUser
 
 
 @pytest.fixture(scope='function', autouse=True)
@@ -17,7 +18,7 @@ def start_mess():
 
 @pytest.fixture
 def generate_valid_cred_for_user_creation():
-    """ Generate valid credential for user creation"""
+    """Generate valid credential for user creation"""
     headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
     user_data = GenerateUser.generate_user()
     return headers, user_data
@@ -25,7 +26,7 @@ def generate_valid_cred_for_user_creation():
 
 @pytest.fixture
 def create_user_fix(generate_valid_cred_for_user_creation):
-    """ Create new random user """
+    """Create new random user"""
     headers, user_data = generate_valid_cred_for_user_creation
 
     response = CreateUser(headers, user_data).create_user()
@@ -38,7 +39,7 @@ def create_user_fix(generate_valid_cred_for_user_creation):
 
 @pytest.fixture
 def generate_token_fix(create_user_fix):
-    """ Generate Bearer-token for created user """
+    """Generate Bearer-token for created user"""
     headers, user_data, user_id = create_user_fix
 
     response = GenerateToken(headers, user_data).generate_token()
@@ -46,4 +47,3 @@ def generate_token_fix(create_user_fix):
 
     token = response.response_json['token']
     return headers, user_data, user_id, token
-

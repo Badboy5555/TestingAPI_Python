@@ -1,5 +1,7 @@
 import logging
 
+from requests import Response
+
 
 class Logger:
     instance = None
@@ -24,26 +26,27 @@ class Logger:
         return cls.instance
 
     def log_request(self, method: str, url: str, headers: dict, data: dict, cookies: dict):
-        current_data = f'\n--Request data--\n'
+        current_data = '\n--Request data--\n'
         current_data += f'Method: {method}\n'
         current_data += f'Url: {url}\n'
         current_data += f'Headers: {headers}\n'
         current_data += f'Data: {data}\n'
         current_data += f'Cookies: {cookies}\n'
-        current_data += f'--End request data--'
+        current_data += '--End request data--'
 
         self.logger.info(current_data)
 
-    def log_response(self, response):
-        current_data = f'\n--Response data--\n'
+    def log_response(self, response: Response):
+        current_data = '\n--Response data--\n'
         current_data += f'Satus code: {response.status_code}\n'
         current_data += f'Data: {response.text}\n'
         current_data += f'Headers: {dict(response.headers)}\n'
         current_data += f'Cookies: {dict(response.cookies)}\n'
-        current_data += f'--End response data--'
+        current_data += '--End response data--'
 
         self.logger.info(current_data)
 
-    def clean_log_file(self, file=path):
+    @staticmethod
+    def clean_log_file(file: str = path):
         open(file, 'w').close()
-
+        Logger.get_instance().logger.info('Log was cleaned.')

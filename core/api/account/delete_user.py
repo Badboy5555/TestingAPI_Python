@@ -1,7 +1,9 @@
-from constants import Account_urls
 from core.api.account.base import Base
+from core.common.constants import Account_urls
 from core.common.my_request import MyRequest
-from models.models import ResponseModel
+from core.common.my_validator import MyValidator
+from models.account.base import BaseErrorResponse, BaseValidResponse
+from models.account.generate_token import ValidResponse
 
 
 class DeleteUser(Base):
@@ -11,6 +13,10 @@ class DeleteUser(Base):
         self.url = url + user_id
         self.headers = headers
 
-    def delete_user(self) -> ResponseModel:
+    def delete_user(self) -> BaseValidResponse:
         response = MyRequest.delete(self.url, headers=self.headers)
-        return ResponseModel(status_code=self.get_status_code(response), response=response.request.url)
+        response_json = self.get_json(response)
+
+        MyValidator.validate_empty_or_bool(response_json, ValidResponse, BaseErrorResponse)
+
+        return BaseValidResponse(status_code=self.get_status_code(response), response=response_json)

@@ -1,14 +1,18 @@
 from core.api.account.get_user import GetUser
-from models.account.get_user import ValidResponse, ErrorResponse
-from constants import ResponseErros
-from schemas.account.get_user_schema import user_exists_schema as get_user_user_exists_schema
-
 from core.common.assertions import Assertions
+from core.common.constants import ResponseErrors
 
 
 class TestAccountGetUser:
+    def test_user_exists(self, generate_token_fix):
+        """
+        1. Try to get existing user
+         1.1. Create user via valid credentials
+         1.2. Get not existing user via existing user_id
+        2. Check status code is 200
+        3. Check response
+        """
 
-    def test_user_exist(self, generate_token_fix):
         # Generate Bearer-token for created user
         self.headers, self.user_data, self.user_id, self.token = generate_token_fix
 
@@ -18,7 +22,24 @@ class TestAccountGetUser:
         response = GetUser(self.headers, self.user_id).get_user()
 
         Assertions.assert_response_status_code(response, 200)
-        print(response.response_json)
-        assert ValidResponse.model_validate(response.response_json)
-        Assertions.assert_response_valid_schema(response, get_user_user_exists_schema)
 
+    def test_user_not_exists(self, generate_token_fix):
+        """
+        1. Try to get not existing user
+         1.1. Create user via valid credentials
+         1.2. Get not existing user via not existing user_id
+        2. Check status code is 401
+        3. Check response
+        """
+
+        # Generate Bearer-token for created user
+        self.headers, self.user_data, self.user_id, self.token = generate_token_fix
+
+        # Get user
+        self.headers.update({'Authorization': f'Bearer {self.token}'})
+        self.user_id = 'not_valid_user_id'
+
+        response = GetUser(self.headers, self.user_id).get_user()
+
+        Assertions.assert_response_status_code(response, 401)
+        Assertions.assert_valid_error_occur(response, ResponseErrors.USER_NOT_AUTHORIZED)

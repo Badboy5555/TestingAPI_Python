@@ -1,10 +1,6 @@
 [tool.black]
-target-version = ['py38', 'py311']
+target-version = ['py311']
 line-length = 120
-skip-string-normalization = True
-color = True
-verbose = True
-exclude = '''
-    venv/
-    tests/
-'''
+skip-string-normalization = true
+color = true
+verbose = true

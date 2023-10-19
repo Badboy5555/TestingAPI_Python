@@ -1,13 +1,17 @@
 from core.api.account.generate_token import GenerateToken
-from constants import ResponseErros
-from models.account.generate_token import ErrorResponse, ValidResponse
-
 from core.common.assertions import Assertions
 
 
 class TestAccountGenerateToken:
+    def test_user_exists(self, create_user_fix):
+        """
+        1. Try to generate token for existing user
+         1.1. Create user via valid credentials
+         1.2. Generate token for not existing user via not existing userName
+        2. Check status code is 200
+        3. Check response
+        """
 
-    def test_user_exist(self, create_user_fix):
         # Create new random user
         self.headers, self.user_data, self.user_id = create_user_fix
 
@@ -15,9 +19,16 @@ class TestAccountGenerateToken:
         response = GenerateToken(self.headers, self.user_data).generate_token()
 
         Assertions.assert_response_status_code(response, 200)
-        assert ValidResponse.model_validate(response.response_json)
 
-    def test_user_not_exist(self, create_user_fix):
+    def test_user_not_exists(self, create_user_fix):
+        """
+        1. Try to generate token for not existing user
+         1.1. Create user via valid credentials
+         1.2. Generate token for not existing user via not existing userName
+        2. Check status code is 400
+        3. Check response
+        """
+
         # Create new random user
         self.headers, self.user_data, self.user_id = create_user_fix
         self.user_data['userName'] = '198nme'
@@ -25,7 +36,4 @@ class TestAccountGenerateToken:
         # Generate Bearer-token for created user
         response = GenerateToken(self.headers, self.user_data).generate_token()
 
-        assert ErrorResponse.model_validate(response.response_json)
-        Assertions.assert_response_status_code(response, 400) # ручка возвращает 200
-
-
+        Assertions.assert_response_status_code(response, 400)  # ручка возвращает 200

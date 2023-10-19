@@ -1,12 +1,13 @@
-import requests
 import allure
-from constants import Bases
-from core.common.environments import Environ
+import requests
+
+from core.common.constants import Bases
+from core.common.environments import Env
 from core.common.logger import Logger
 
 
 class MyRequest:
-    """ Just a wrapper for request """
+    """Just a wrapper for request"""
 
     @staticmethod
     def get(url: str, headers: dict = None, data: dict = None, cookies: dict = None):
@@ -25,9 +26,10 @@ class MyRequest:
         return MyRequest._send_request(method='DELETE', url=url, headers=headers, data=data, cookies=cookies)
 
     @staticmethod
-    def _send_request(method: str, url: str, headers: dict, data: dict, cookies: dict = None) -> requests.Response:
-
-        url = Bases.BASE_URL + url.replace('api_version', Environ.get_env_api_version())
+    def _send_request(
+        method: str, url: str, headers: dict = None, data: dict = None, cookies: dict = None
+    ) -> requests.Response:
+        url = Bases.BASE_URL + url.replace('API_VERSION', Env.API_VERSION)
 
         if headers is None:
             headers = {}

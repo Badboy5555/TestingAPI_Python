@@ -1,3 +1,4 @@
 isort --settings-file ./config.isort .
 black --config ./config.black .
 flake8 --config ./config.flake8 .
+mypy --config ./config.mypy --explicit-package-bases .
