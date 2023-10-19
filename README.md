@@ -8,13 +8,13 @@ A tech stack: Python + requests + Pydantic + Pytest + Allure
 - Autotests — [link](https://github.com/Badboy5555/TestingAPI_Python/tree/master/tests)
 
 **Advanced features**  
-1. Pre-commit configs for code logic and code style validation via [link]():
-- Isort [link]()
-- Black [link]()
-- Flake [link]()
-- Mypy [link]()
-2. GitHub Actions config [link]()
-3. Dockerfile config [link]()
+1. Pre-commit configs for code logic and code style validation via [link](https://github.com/Badboy5555/TestingAPI_Python/blob/master/.pre-commit-config.yaml):
+- Isort [link](https://github.com/Badboy5555/TestingAPI_Python/blob/master/config.isort)
+- Black [link](https://github.com/Badboy5555/TestingAPI_Python/blob/master/config.black)
+- Flake [link](https://github.com/Badboy5555/TestingAPI_Python/blob/master/config.flake8)
+- Mypy [link](https://github.com/Badboy5555/TestingAPI_Python/blob/master/config.mypy)
+2. GitHub Actions config [link](https://github.com/Badboy5555/TestingAPI_Python/tree/master/.github/workflows)
+3. Dockerfile config [link](https://github.com/Badboy5555/TestingAPI_Python/blob/master/Dockerfile)
 
 
 # Installation
