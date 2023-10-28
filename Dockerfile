@@ -8,7 +8,7 @@ COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
-COPY /tests .
+COPY . .
 
 VOLUME /usr/src/api_tests/test_results
 
